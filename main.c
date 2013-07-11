@@ -1,4 +1,4 @@
-// Mounter2 v1.3.4
+// Mounter2 v1.3.5
 /*this program allows you to specify a iso file and its directory and mount it in /mnt  there is also an option to unmout the file.
 Copyright (C) 2013  James Fortini
 
@@ -65,7 +65,7 @@ static void destroy( GtkWidget *widget,
 // Unmount
 static void unmount (GtkWidget *wid, GtkWidget *win)
 {
-  system("kdesu umount /mnt/");
+  system("gksu umount /mnt/");
   GtkWidget *dialog = NULL;
   dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Unmounted");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
@@ -78,7 +78,7 @@ static void mount ( GtkWidget *wid, GtkWidget *win)
 {
   folderpathx =  gtk_entry_get_text(GTK_ENTRY(textenter1));
   isox =  gtk_entry_get_text(GTK_ENTRY(textenter));
-  strcpy(command, "kdesu mount  ");
+  strcpy(command, "gksu mount  ");
   strcat(command, folderpathx);
   strcat(command, isox);
   strcat(command, " /mnt/");
@@ -119,7 +119,7 @@ int main( int   argc, char *argv[] )
  // Build the main window
     gtk_init (&argc, &argv);
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title (GTK_WINDOW (window), "Mounter2 v1.3");
+    gtk_window_set_title (GTK_WINDOW (window), "Mounter2");
     g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (delete_event), NULL);
     g_signal_connect (G_OBJECT (window), "destroy", G_CALLBACK (destroy), NULL);
     gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
