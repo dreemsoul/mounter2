@@ -1,4 +1,4 @@
-// Mounter2 v1.3.5
+// Mounter2 v1.3.6
 /*this program allows you to specify a iso file and its directory and mount it in /mnt  there is also an option to unmout the file.
 Copyright (C) 2013  James Fortini
 
@@ -17,6 +17,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 // Headers
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
@@ -76,25 +77,37 @@ static void unmount (GtkWidget *wid, GtkWidget *win)
 //Mount
 static void mount ( GtkWidget *wid, GtkWidget *win)
 {
+  int checkfail;
   folderpathx =  gtk_entry_get_text(GTK_ENTRY(textenter1));
   isox =  gtk_entry_get_text(GTK_ENTRY(textenter));
-  strcpy(command, "gksu mount  ");
+  strcpy(command, "exec gksu mount  ");
   strcat(command, folderpathx);
   strcat(command, isox);
   strcat(command, " /mnt/");
-  system(command);
-  GtkWidget *dialog = NULL;
-  dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Check your folder...\nSeems mounted");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (dialog);
+  checkfail = system(command);
+  if (checkfail == 0)
+  {
+     GtkWidget *dialog = NULL;
+     dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Check your folder...\nSeems mounted");
+     gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+     gtk_dialog_run (GTK_DIALOG (dialog));
+     gtk_widget_destroy (dialog);
+  }
+  else
+  {
+     GtkWidget *dialog = NULL;
+     dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Could not mount file...\nCheck and make sure\nfolder path is correct.\nand that nothing else\nis mounted there.");
+     gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+     gtk_dialog_run (GTK_DIALOG (dialog));
+     gtk_widget_destroy (dialog);
+  }
 }
 
 // About Menu Item
 static void aboutit (GtkWidget *wid, GtkWidget *win)
 {
   GtkWidget *dialog = NULL;
-  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.3.4\n""Is an application designed to make\n""mounting iso files easy to do.");
+  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.3.6\n""Is an application designed to make\n""mounting iso files easy to do.");
   dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, aboutlab);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_dialog_run (GTK_DIALOG (dialog));
