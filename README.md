@@ -1,7 +1,27 @@
 mounter2
 ========
 
-Hello ALL version 1.3.6 is now out.
+Hello ALL version 1.4.0 is finished.
+
+this version has removed the text fields and placed in a button to
+select the iso file.  the text field now displays the file chosen.
+it also still works fine if you type in the file by hand.
+
+^^ done upon request ^^
+
+also instead of using system() command it now uses execv()
+
+the result of having a button leaves me with little need to set up
+a config file with default directory containing iso files.
+i hope people are happy with the change.
+
+also in later updates i hope to but in a couple different mount
+points so that the program does not take up all of /mnt.
+
+thank you again all,
+cheers.
+
+----1.3.6 updates ----
 
 i wrote some error handling so now when the mount command
 fails it will send an error back instead of telling you it is
@@ -38,9 +58,8 @@ also removed the older files as i considered
 the 1.3 version incomplete.
 --TODO--
 
-after its compiled it can be run with ./mounter2
 requires gtk and gksu
 
 mounter2 is desgined to make mounting iso files
-much simpler.  future versions will allow saving
-a default directory in which you store your iso files.
+much simpler. :-D
+
