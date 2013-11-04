@@ -146,7 +146,7 @@ static void mount ( GtkWidget *wid, GtkWidget *win )
 static void aboutit (GtkWidget *wid, GtkWidget *win)
 {
   GtkWidget *dialog = NULL;
-  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.3.6\n""Is an application designed to make\n""mounting iso files easy to do.");
+  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.4.0\n""Is an application designed to make\n""mounting iso files easy to do.");
   dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, aboutlab);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_dialog_run (GTK_DIALOG (dialog));
