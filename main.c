@@ -1,4 +1,4 @@
-// Mounter2 v1.4.0
+// Mounter2 v1.4.1
 /*this program allows you to specify a iso file and its directory and mount it in /mnt  there is also an option to unmout the file.
 Copyright (C) 2013  James Fortini
 
@@ -22,10 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <sys/wait.h>
-
-// Prototypes
-int strcpy(const char *dest, const char *src);
-int strncat(const char *dest, const char *src, size_t n);
+#include <unistd.h>
+#include <sys/types.h>
 
 // Random Variables
     char              textlab[64];
@@ -72,14 +70,12 @@ static void destroy( GtkWidget *widget,
 static void unmount (GtkWidget *wid, GtkWidget *win)
 {
   int checkfail;
-  const char *args[4];
+  char *const args[] = {"/usr/bin/gksu","/bin/umount","/mnt/",NULL} ;
+
   pid_t pid = fork() ;
 
-  if (pid == 0){
-      args[0] = "/usr/bin/gksu";
-      args[1] = "/usr/bin/umount";
-      args[2] = "/mnt/";
-      args[3] = 0;
+  if (pid == 0)
+  {
 	  execv(args[0], args);
   }else{
 	  waitpid( pid,&checkfail,0 ) ;
@@ -106,17 +102,13 @@ static void unmount (GtkWidget *wid, GtkWidget *win)
 static void mount ( GtkWidget *wid, GtkWidget *win )
 {
   int checkfail;
-  const char *args[5];
+  char *const args[] = { "/usr/bin/gksu","/bin/mount",(char*)folderpathx,"/mnt",NULL };
   folderpathx =  gtk_entry_get_text(GTK_ENTRY(fpath));
 
   pid_t pid = fork() ;
 
-  if (pid == 0){
-	  args[0] = "/usr/bin/gksu";
-	  args[1] = "/bin/mount";
-	  args[2] = (char *)folderpathx;
-	  args[3] = "/mnt";
-	  args[4] = 0;
+  if (pid == 0)
+  {
 	  execv(args[0], args);
   }else{
 	  waitpid( pid,&checkfail,0 ) ;
@@ -146,7 +138,7 @@ static void mount ( GtkWidget *wid, GtkWidget *win )
 static void aboutit (GtkWidget *wid, GtkWidget *win)
 {
   GtkWidget *dialog = NULL;
-  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.4.0\n""Is an application designed to make\n""mounting iso files easy to do.");
+  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.4.1\n""Is an application designed to make\n""mounting iso files easy to do.");
   dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, aboutlab);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_dialog_run (GTK_DIALOG (dialog));
@@ -154,20 +146,20 @@ static void aboutit (GtkWidget *wid, GtkWidget *win)
 }
 static void openpath()
 {
-  dialog = gtk_file_chooser_dialog_new ("Open File",
+    dialog = gtk_file_chooser_dialog_new ("Open File",
 				      GTK_WINDOW (window),
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 				      NULL);
 
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
         {
             filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
         }
-  gtk_entry_set_text(GTK_ENTRY(fpath), filename);
-  gtk_widget_destroy (dialog);
+    gtk_entry_set_text(GTK_ENTRY(fpath), filename);
+    gtk_widget_destroy (dialog);
 }
 
 // Main Function
