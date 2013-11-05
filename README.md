@@ -1,7 +1,11 @@
 mounter2
 ========
 
-Hello ALL version 1.4.0 is finished.
+Hello ALL version 1.4.1 is finished.
+
+no longer compiles with warnings.
+
+---- version 1.4.0 updates ----
 
 this version has removed the text fields and placed in a button to
 select the iso file.  the text field now displays the file chosen.
@@ -62,4 +66,3 @@ requires gtk and gksu
 
 mounter2 is desgined to make mounting iso files
 much simpler. :-D
-
