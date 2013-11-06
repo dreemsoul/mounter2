@@ -1,4 +1,4 @@
-// Mounter2 v1.4.1
+// Mounter2 v1.4.2
 /*this program allows you to specify a iso file and its directory and mount it in /mnt  there is also an option to unmout the file.
 Copyright (C) 2013  James Fortini
 
@@ -70,7 +70,8 @@ static void destroy( GtkWidget *widget,
 static void unmount (GtkWidget *wid, GtkWidget *win)
 {
   int checkfail;
-  char *const args[] = {"/usr/bin/gksu","/bin/umount","/mnt/",NULL} ;
+  folderpathx =  gtk_entry_get_text(GTK_ENTRY(fpath));
+  char *const args[] = {"/usr/bin/udevil","umount",(char*)folderpathx,NULL} ;
 
   pid_t pid = fork() ;
 
@@ -103,8 +104,7 @@ static void mount ( GtkWidget *wid, GtkWidget *win )
 {
   int checkfail;
   folderpathx =  gtk_entry_get_text(GTK_ENTRY(fpath));
-  char *const args[] = { "/usr/bin/gksu","/bin/mount",(char*)folderpathx,"/mnt",NULL };
-
+  char *const args[] = { "/usr/bin/udevil", "mount",(char*)folderpathx,NULL };
 
   pid_t pid = fork() ;
 
@@ -139,7 +139,7 @@ static void mount ( GtkWidget *wid, GtkWidget *win )
 static void aboutit (GtkWidget *wid, GtkWidget *win)
 {
   GtkWidget *dialog = NULL;
-  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.4.1\n""Is an application designed to make\n""mounting iso files easy to do.");
+  sprintf(aboutlab,"%s", "Mounter2\n\n""Version 1.4.2\n""Is an application designed to make\n""mounting iso files easy to do.");
   dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, aboutlab);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_dialog_run (GTK_DIALOG (dialog));
@@ -210,7 +210,7 @@ int main( int   argc, char *argv[] )
     gtk_label_set_justify(GTK_LABEL (textstuff),GTK_JUSTIFY_LEFT);
     gtk_misc_set_alignment (GTK_MISC (textstuff), 0, 0.5);
     gtk_box_pack_start (GTK_BOX (vertbox), textstuff, TRUE, TRUE, 0);
-    sprintf(textlab, "<small>%s</small>", "Select an ISO");
+    sprintf(textlab, "<small>%s</small>", "Select an ISO to be mounted / unmounted.");
     gtk_label_set_justify(GTK_LABEL (textstuff),GTK_JUSTIFY_LEFT);
     gtk_misc_set_alignment (GTK_MISC (textstuff), 0, 0.5);
     gtk_box_pack_start (GTK_BOX (vertbox), textstuff, TRUE, TRUE, 0);
