@@ -1,7 +1,21 @@
 mounter2
 ========
 
-Hello ALL version 1.4.1 is finished.
+Hello ALL version 1.4.2 is finished.
+
+now no longer uses gksu.  udevil is used as a dependency instead 
+so there is no longer a need for a root password.
+
+if your distro does not provide udevil as a package the source code
+can be found
+
+here: http://ignorantguru.github.io/udevil/
+
+also this version allows multiple images to be mounted.
+to unmount the image make sure that you have the same file selected
+and have included the full path as when you mounted the file.
+
+---- version 1.4.1 updates ----
 
 no longer compiles with warnings.
 
