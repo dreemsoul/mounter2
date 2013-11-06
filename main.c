@@ -102,8 +102,9 @@ static void unmount (GtkWidget *wid, GtkWidget *win)
 static void mount ( GtkWidget *wid, GtkWidget *win )
 {
   int checkfail;
-  char *const args[] = { "/usr/bin/gksu","/bin/mount",(char*)folderpathx,"/mnt",NULL };
   folderpathx =  gtk_entry_get_text(GTK_ENTRY(fpath));
+  char *const args[] = { "/usr/bin/gksu","/bin/mount",(char*)folderpathx,"/mnt",NULL };
+
 
   pid_t pid = fork() ;
 
